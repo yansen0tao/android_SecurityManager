@@ -25,6 +25,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <activity 
+            android:name="com.example.android_securitymanager.Activities.HomeActivity"></activity>
+        
+        <activity 
+            android:name="com.example.android_securitymanager.Activities.activity_setting_center"></activity>
     </application>
 
 </manifest>

@@ -46,7 +46,7 @@ public class SplashActivity extends Activity {
 	private static final int MSG_INNER_ERRORS = -1;
 	private long MAX_CHECK_HOLD_DURATION = 2000;// millis
 	private int local_code = 0;
-	private versionObject vobj = new versionObject();
+	private versionObject vObjFromNet = new versionObject();
 	private Handler handler;
 
 	final private String List_Addr = "http://10.18.19.219:8080/version_list.json";// 必须加上http://,浏览器上可以不加，是因为浏览器帮我们加了
@@ -69,11 +69,12 @@ public class SplashActivity extends Activity {
 	}
 
 	private void enterHome() {
-
+		Intent intent = new Intent(this, HomeActivity.class);
+		startActivity(intent);
+		
+		finish();
 	}
 
-	
-	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		enterHome();
@@ -84,14 +85,21 @@ public class SplashActivity extends Activity {
 
 		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
 
-			String packageUrl = vobj.getUrl();
+			String packageUrl = vObjFromNet.getUrl();
 			String packageName = File.separator
 					+ packageUrl.substring(packageUrl.lastIndexOf("/") + 1);
 
 			HttpUtils http = new HttpUtils();
-			HttpHandler hander = http.download(vobj.getUrl(), Environment
+			HttpHandler hander = http.download(vObjFromNet.getUrl(), Environment
 					.getExternalStorageDirectory().toString() + packageName,
 					true, true, new RequestCallBack<File>() {
+
+						@Override
+						public void onLoading(long total, long current,
+								boolean isUploading) {
+							// TODO Auto-generated method stub
+							super.onLoading(total, current, isUploading);
+						}
 
 						@Override
 						public void onSuccess(ResponseInfo<File> arg0) {
@@ -218,8 +226,8 @@ public class SplashActivity extends Activity {
 						int version_code = object.getInt("version_code");
 						String update_addr = object.getString("url");
 
-						vobj.setUrl(update_addr);
-						vobj.setVersion_code(version_code);
+						vObjFromNet.setUrl(update_addr);
+						vObjFromNet.setVersion_code(version_code);
 
 						if (local_code < version_code) {
 							msg_what = MSG_FOUND_NEW_VERSION;
