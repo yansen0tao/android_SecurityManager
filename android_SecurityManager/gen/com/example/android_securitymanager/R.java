@@ -9,6 +9,30 @@ package com.example.android_securitymanager;
 
 public final class R {
     public static final class attr {
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int desc_off=0x7f010002;
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int desc_on=0x7f010001;
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int title=0x7f010000;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
@@ -35,13 +59,16 @@ public final class R {
         public static final int splash=0x7f02000a;
     }
     public static final class id {
-        public static final int action_settings=0x7f080006;
+        public static final int action_settings=0x7f080009;
         public static final int gv_home=0x7f080000;
-        public static final int gv_item_iv=0x7f080004;
-        public static final int gv_item_tv=0x7f080005;
-        public static final int setting_items_tv_id=0x7f080001;
-        public static final int tv_splash_name=0x7f080002;
-        public static final int tv_splash_version=0x7f080003;
+        public static final int gv_item_iv=0x7f080007;
+        public static final int gv_item_tv=0x7f080008;
+        public static final int setting_items_tv_checkBox=0x7f080004;
+        public static final int setting_items_tv_desc=0x7f080003;
+        public static final int setting_items_tv_title=0x7f080002;
+        public static final int tv_splash_name=0x7f080005;
+        public static final int tv_splash_version=0x7f080006;
+        public static final int view_setting_center_update=0x7f080001;
     }
     public static final class layout {
         public static final int activity_home=0x7f030000;
@@ -90,4 +117,65 @@ public final class R {
          */
         public static final int AppThemeNoTitle=0x7f060002;
     }
+    public static final class styleable {
+        /** Attributes that can be used with a view_setting_center_items_update.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #view_setting_center_items_update_desc_off com.example.android_securitymanager:desc_off}</code></td><td></td></tr>
+           <tr><td><code>{@link #view_setting_center_items_update_desc_on com.example.android_securitymanager:desc_on}</code></td><td></td></tr>
+           <tr><td><code>{@link #view_setting_center_items_update_title com.example.android_securitymanager:title}</code></td><td></td></tr>
+           </table>
+           @see #view_setting_center_items_update_desc_off
+           @see #view_setting_center_items_update_desc_on
+           @see #view_setting_center_items_update_title
+         */
+        public static final int[] view_setting_center_items_update = {
+            0x7f010000, 0x7f010001, 0x7f010002
+        };
+        /**
+          <p>This symbol is the offset where the {@link com.example.android_securitymanager.R.attr#desc_off}
+          attribute's value can be found in the {@link #view_setting_center_items_update} array.
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.android_securitymanager:desc_off
+        */
+        public static final int view_setting_center_items_update_desc_off = 2;
+        /**
+          <p>This symbol is the offset where the {@link com.example.android_securitymanager.R.attr#desc_on}
+          attribute's value can be found in the {@link #view_setting_center_items_update} array.
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.android_securitymanager:desc_on
+        */
+        public static final int view_setting_center_items_update_desc_on = 1;
+        /**
+          <p>This symbol is the offset where the {@link com.example.android_securitymanager.R.attr#title}
+          attribute's value can be found in the {@link #view_setting_center_items_update} array.
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.android_securitymanager:title
+        */
+        public static final int view_setting_center_items_update_title = 0;
+    };
 }

@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:securityManager="http://schemas.android.com/apk/res/com.example.android_securitymanager"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
-   	<TextView 
-    android:layout_width="match_parent"
-    android:layout_height="35dp"
-    android:gravity="center"
-    android:background="@android:color/holo_purple"
-    android:textSize="20sp"
-    android:text="设置中心"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:background="@android:color/holo_purple"
+        android:gravity="center"
+        android:text="设置中心"
+        android:textSize="20sp" />
+
+    <com.example.android_securitymanager.Views.view_setting_center_items_update
+        android:id="@+id/view_setting_center_update"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        securityManager:desc_on="自动更新开启"
+        securityManager:desc_off="自动更新关闭"
+        securityManager:title="自动更新设置" >
+    </com.example.android_securitymanager.Views.view_setting_center_items_update>
 
 </LinearLayout>

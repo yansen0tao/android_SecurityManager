@@ -5,6 +5,7 @@ import java.util.HashMap;
 import android.R.bool;
 import android.R.integer;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,8 +33,9 @@ public class HomeActivity extends Activity {
 			return false;
 		
 		switch (item){
-		case 0:
-			
+		case 8:
+			Intent intent = new Intent(this, activity_setting_center.class);
+			startActivity(intent);
 			break;
 		}
 		

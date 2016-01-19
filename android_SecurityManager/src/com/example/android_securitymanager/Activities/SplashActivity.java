@@ -17,6 +17,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -183,14 +184,23 @@ public class SplashActivity extends Activity {
 				case MSG_INNER_ERRORS:
 					finish();
 					break;
-				default:
-					System.out.println("default");
-					break;
+				}
+				
+				if (msg.what == MSG_HTTP_CONNECT_FAILURE || msg.what == MSG_NO_FOUND_NEW_VERSION){
+					enterHome();
 				}
 			}
 		};
 
-		check_Update();
+		SharedPreferences sPre = null;
+		sPre = getSharedPreferences("config", MODE_PRIVATE);
+		
+		if (sPre.getBoolean("auto_update", false) == true){
+			check_Update();
+		}
+		else{
+			handler.sendEmptyMessageDelayed(MSG_NO_FOUND_NEW_VERSION, MAX_CHECK_HOLD_DURATION);
+		}
 	}
 
 	private void check_Update() {

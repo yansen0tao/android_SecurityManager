@@ -4,21 +4,23 @@
     android:layout_height="70dp" >
     
     <TextView 
-        android:id="@+id/setting_items_tv_id"
+        android:id="@+id/setting_items_tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="30sp"
         android:text="test title"/>
     
     <TextView 
+        android:id="@+id/setting_items_tv_desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/setting_items_tv_id"
+        android:layout_below="@id/setting_items_tv_title"
         android:textSize="15sp"
         android:layout_alignParentBottom="true"
         android:text="test desc"/>
     
     <CheckBox 
+        android:id="@+id/setting_items_tv_checkBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
