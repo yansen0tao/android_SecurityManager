@@ -44,8 +44,9 @@ public class SplashActivity extends Activity {
 	private static final int MSG_HTTP_CONNECT_FAILURE = 1;
 	private static final int MSG_FOUND_NEW_VERSION = 2;
 	private static final int MSG_NO_FOUND_NEW_VERSION = 3;
+	private static final int MSG_NO_UPDATE_DECTED = 4;
 	private static final int MSG_INNER_ERRORS = -1;
-	private long MAX_CHECK_HOLD_DURATION = 2000;// millis
+	private long MAX_CHECK_HOLD_DURATION = 3000;// millis
 	private int local_code = 0;
 	private versionObject vObjFromNet = new versionObject();
 	private Handler handler;
@@ -72,7 +73,7 @@ public class SplashActivity extends Activity {
 	private void enterHome() {
 		Intent intent = new Intent(this, HomeActivity.class);
 		startActivity(intent);
-		
+
 		finish();
 	}
 
@@ -84,21 +85,22 @@ public class SplashActivity extends Activity {
 
 	private void download() {
 
-		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+		if (Environment.getExternalStorageState().equals(
+				Environment.MEDIA_MOUNTED)) {
 
 			String packageUrl = vObjFromNet.getUrl();
 			String packageName = File.separator
 					+ packageUrl.substring(packageUrl.lastIndexOf("/") + 1);
 
 			HttpUtils http = new HttpUtils();
-			HttpHandler hander = http.download(vObjFromNet.getUrl(), Environment
-					.getExternalStorageDirectory().toString() + packageName,
-					true, true, new RequestCallBack<File>() {
+			HttpHandler hander = http.download(vObjFromNet.getUrl(),
+					Environment.getExternalStorageDirectory().toString()
+							+ packageName, true, true,
+					new RequestCallBack<File>() {
 
 						@Override
 						public void onLoading(long total, long current,
 								boolean isUploading) {
-							// TODO Auto-generated method stub
 							super.onLoading(total, current, isUploading);
 						}
 
@@ -107,11 +109,12 @@ public class SplashActivity extends Activity {
 							Toast.makeText(SplashActivity.this,
 									"Download success", Toast.LENGTH_SHORT)
 									.show();
-							
+
 							Intent intent = new Intent(Intent.ACTION_VIEW);
-							intent.setDataAndType(Uri.fromFile(arg0.result), "application/vnd.android.package-archive");
+							intent.setDataAndType(Uri.fromFile(arg0.result),
+									"application/vnd.android.package-archive");
 							intent.addCategory(Intent.CATEGORY_DEFAULT);
-							
+
 							startActivityForResult(intent, 0);
 						}
 
@@ -181,12 +184,16 @@ public class SplashActivity extends Activity {
 							"MSG_NO_FOUND_NEW_VERSION", Toast.LENGTH_SHORT)
 							.show();
 					break;
+				case MSG_NO_UPDATE_DECTED:
+					break;
 				case MSG_INNER_ERRORS:
 					finish();
 					break;
 				}
-				
-				if (msg.what == MSG_HTTP_CONNECT_FAILURE || msg.what == MSG_NO_FOUND_NEW_VERSION){
+
+				if (msg.what == MSG_HTTP_CONNECT_FAILURE
+						|| msg.what == MSG_NO_FOUND_NEW_VERSION
+						|| msg.what == MSG_NO_UPDATE_DECTED) {
 					enterHome();
 				}
 			}
@@ -194,12 +201,12 @@ public class SplashActivity extends Activity {
 
 		SharedPreferences sPre = null;
 		sPre = getSharedPreferences("config", MODE_PRIVATE);
-		
-		if (sPre.getBoolean("auto_update", false) == true){
+
+		if (sPre.getBoolean("auto_update", false) == true) {
 			check_Update();
-		}
-		else{
-			handler.sendEmptyMessageDelayed(MSG_NO_FOUND_NEW_VERSION, MAX_CHECK_HOLD_DURATION);
+		} else {
+			handler.sendEmptyMessageDelayed(MSG_NO_UPDATE_DECTED,
+					MAX_CHECK_HOLD_DURATION);
 		}
 	}
 

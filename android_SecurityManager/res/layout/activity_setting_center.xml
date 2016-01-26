@@ -6,20 +6,15 @@
     android:orientation="vertical" >
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:background="@android:color/holo_purple"
-        android:gravity="center"
-        android:text="设置中心"
-        android:textSize="20sp" />
+       	style="@style/TitleStyle"
+        android:text="设置中心"/>
 
-    <com.example.android_securitymanager.Views.view_setting_center_items_update
+    <com.example.android_securitymanager.Views.View_title_desc_style
         android:id="@+id/view_setting_center_update"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         securityManager:desc_on="自动更新开启"
         securityManager:desc_off="自动更新关闭"
-        securityManager:title="自动更新设置" >
-    </com.example.android_securitymanager.Views.view_setting_center_items_update>
+        securityManager:title="自动更新设置" />
 
 </LinearLayout>

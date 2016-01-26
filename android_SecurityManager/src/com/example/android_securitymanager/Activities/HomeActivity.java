@@ -1,22 +1,28 @@
 package com.example.android_securitymanager.Activities;
 
-import java.util.HashMap;
-
-import android.R.bool;
-import android.R.integer;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android_securitymanager.R;
+import com.example.android_securitymanager.Utils.MD5Utils;
 
 public class HomeActivity extends Activity {
 	private GridView gridViewId;
@@ -33,13 +39,130 @@ public class HomeActivity extends Activity {
 			return false;
 		
 		switch (item){
+		case 0:
+			show_dialog();
+			break;
 		case 8:
-			Intent intent = new Intent(this, activity_setting_center.class);
+			Intent intent = new Intent(this, SettingCenterActivity.class);
 			startActivity(intent);
 			break;
 		}
 		
 		return true;
+	}
+	
+	private void show_dialog(){
+		SharedPreferences sPre = getSharedPreferences("passwd_store", MODE_PRIVATE);	
+		String record = sPre.getString("passwd", null);
+		if (TextUtils.isEmpty(record)){
+			showPasswdSetDialog();
+		}
+		else
+		{
+			showPasswdEnterDialog();
+		}
+	}
+	
+	private void enter_quick_setup(){
+		SharedPreferences sPre = getSharedPreferences("config", MODE_PRIVATE);	
+		boolean is_guided = sPre.getBoolean("setting_guided", false);
+		Class which;
+		
+		if (is_guided == true){
+			which = SetupFinishActivity.class;
+		}
+		else
+			which = Setup1Activity.class;
+		
+		Intent intent = new Intent(this, which);
+		startActivity(intent);
+	}
+	
+	private void showPasswdEnterDialog(){
+		AlertDialog.Builder builder = new Builder(this);
+		final AlertDialog dialog = builder.create();
+		View view = View.inflate(this, R.layout.passwd_enter_dialog, null);
+		
+		dialog.setView(view);
+		dialog.show();
+		
+		final EditText passwd = (EditText) view.findViewById(R.id.passwd_enter_et1);
+		
+		Button btn_ok = (Button) view.findViewById(R.id.passwd_passwd_enter_btn_ok);
+		btn_ok.setOnClickListener(new OnClickListener() {
+			SharedPreferences sPre = null;
+			
+			@Override
+			public void onClick(View v) {
+				String passwdStr = passwd.getText().toString();
+				sPre = getSharedPreferences("passwd_store", MODE_PRIVATE);	
+				String record = sPre.getString("passwd", "");
+				String md5 = MD5Utils.encode(passwd.getText().toString());
+				
+				if (md5.equals(record) == true){
+					dialog.dismiss();
+					enter_quick_setup();
+				}
+				else{
+					Toast.makeText(HomeActivity.this, "√‹¬Î¥ÌŒÛ", Toast.LENGTH_SHORT).show();
+				}
+			}
+		});
+		
+		Button btn_cancel = (Button) view.findViewById(R.id.passwd_enter_btn_cancel);
+		btn_cancel.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+			}
+		});
+	}
+	
+	private void showPasswdSetDialog(){
+		AlertDialog.Builder builder = new Builder(this);
+		final AlertDialog dialog = builder.create();
+		View view = View.inflate(this, R.layout.passwd_set_dialog, null);
+		
+		dialog.setView(view);
+		dialog.show();
+		
+		final EditText passwd = (EditText) view.findViewById(R.id.passwd_et1);
+		final EditText passwd_re = (EditText) view.findViewById(R.id.passwd_et2);
+		
+		Button btn_ok = (Button) view.findViewById(R.id.passwd_passwd_set_btn_ok);
+		btn_ok.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				String passwdStr = passwd.getText().toString();
+				String passwdStrRe = passwd_re.getText().toString();
+				if (!TextUtils.isEmpty(passwdStr) && !TextUtils.isEmpty(passwdStr)){
+					if (passwdStr.equals(passwdStrRe)){
+						SharedPreferences shp = getSharedPreferences("passwd_store", MODE_PRIVATE);
+						Editor edit = shp.edit();
+						String md5 = MD5Utils.encode(passwd.getText().toString());
+						edit.putString("passwd", md5);
+						edit.commit();
+						
+						dialog.dismiss();
+						
+						enter_quick_setup();
+					}else{
+						Toast.makeText(HomeActivity.this, "√‹¬Î ‰»Î≤ª“ª÷¬", Toast.LENGTH_SHORT).show();
+					}
+				}
+				else{
+					Toast.makeText(HomeActivity.this, "√‹¬Î≤ªƒ‹Œ™ø’", Toast.LENGTH_SHORT).show();
+				}
+			}
+		});
+		
+		Button btn_cancel = (Button) view.findViewById(R.id.passwd_set_btn_cancel);
+		btn_cancel.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+			}
+		});
 	}
 	
 	@Override

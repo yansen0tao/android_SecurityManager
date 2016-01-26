@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.example.android_securitymanager.R;
 
-public class view_setting_center_items_update extends RelativeLayout {
+public class View_title_desc_style extends RelativeLayout {
 
 	private TextView title;
 	private TextView desc;
@@ -19,20 +19,20 @@ public class view_setting_center_items_update extends RelativeLayout {
 	private String descOff;
 	private String stringTitle;
 
-	public view_setting_center_items_update(Context context) {
+	public View_title_desc_style(Context context) {
 		super(context);
 		
 		init_view(context);
 	}
 	
-	public view_setting_center_items_update(Context context, AttributeSet attrs,
+	public View_title_desc_style(Context context, AttributeSet attrs,
 			int defStyle) {
 		super(context, attrs, defStyle);
 		
 		init_view(context);
 	}
 
-	public view_setting_center_items_update(Context context, AttributeSet attrs) {
+	public View_title_desc_style(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		
 		stringTitle = attrs.getAttributeValue("http://schemas.android.com/apk/res/com.example.android_securitymanager", "title");
@@ -43,7 +43,7 @@ public class view_setting_center_items_update extends RelativeLayout {
 	}
 	
 	private void init_view(Context context){
-		View view = View.inflate(context, R.layout.activity_setting_center_items, this);
+		View view = View.inflate(context, R.layout.view_title_desc_items, this);
 	
 		title = (TextView) findViewById(R.id.setting_items_tv_title);
 		desc = (TextView) findViewById(R.id.setting_items_tv_desc);
