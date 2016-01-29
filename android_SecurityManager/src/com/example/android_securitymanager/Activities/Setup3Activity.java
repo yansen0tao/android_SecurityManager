@@ -7,7 +7,7 @@ import android.view.View;
 
 import com.example.android_securitymanager.R;
 
-public class Setup3Activity extends Activity {
+public class Setup3Activity extends SettingBaseActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -16,7 +16,7 @@ public class Setup3Activity extends Activity {
 		setContentView(R.layout.activity_setup3);
 	}
 	
-	public void next(View view){
+	public void showNextPage(){
 		Intent intent = new Intent(this, Setup4Activity.class);
 		startActivity(intent);
 		
@@ -25,7 +25,7 @@ public class Setup3Activity extends Activity {
 		overridePendingTransition(R.anim.tran_in, R.anim.tran_out);//进入动画和退出动画
 	}
 	
-	public void pre(View view){
+	public void showPrePage(){
 		Intent intent = new Intent(this, Setup2Activity.class);
 		startActivity(intent);	
 		

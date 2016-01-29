@@ -8,8 +8,7 @@ import android.view.View;
 
 import com.example.android_securitymanager.R;
 
-public class Setup4Activity extends Activity {
-	private SharedPreferences sPre;
+public class Setup4Activity extends SettingBaseActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -18,21 +17,19 @@ public class Setup4Activity extends Activity {
 		setContentView(R.layout.activity_setup4);
 	}
 
-	public void next(View view) {
+	public void showNextPage() {
 		Intent intent = new Intent(this, SetupFinishActivity.class);
 		startActivity(intent);
 		finish();
 		
-		sPre = getSharedPreferences("config", MODE_PRIVATE);	
-		
-		SharedPreferences.Editor editor = sPre.edit();
+		SharedPreferences.Editor editor = spRecord.edit();
 		editor.putBoolean("setting_guided", true);
 		editor.commit();
 		
-		overridePendingTransition(R.anim.tran_in, R.anim.tran_out);//进入动画和退出动画
+		overridePendingTransition(R.anim.tran_in, R.anim.tran_out);
 	}
 
-	public void pre(View view) {
+	public void showPrePage() {
 		Intent intent = new Intent(this, Setup3Activity.class);
 		startActivity(intent);
 		finish();

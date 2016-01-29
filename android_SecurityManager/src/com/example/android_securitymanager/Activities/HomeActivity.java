@@ -26,13 +26,14 @@ import com.example.android_securitymanager.Utils.MD5Utils;
 
 public class HomeActivity extends Activity {
 	private GridView gridViewId;
+	private SharedPreferences spRecord = null;
 	
 	String[] name = new String[]{"手机防盗", "通讯卫士", "软件管理", "进程管理", "流量统计", 
 								"手机杀毒", "缓存清理", "高级工具", "设置中心"};
 	int[] icon_id = new int[]{R.drawable.home_safe, R.drawable.home_callmsgsafe, R.drawable.home_apps
-								, R.drawable.home_taskmanager, R.drawable.home_netmanager, R.drawable.home_trojan
-								, R.drawable.home_sysoptimize, R.drawable.home_tools, R.drawable.home_settings};
-	
+							  , R.drawable.home_taskmanager, R.drawable.home_netmanager, R.drawable.home_trojan
+							  , R.drawable.home_sysoptimize, R.drawable.home_tools, R.drawable.home_settings};
+
 	private boolean enterActivity(int item){
 
 		if (item < 0 || item > 9)
@@ -52,25 +53,20 @@ public class HomeActivity extends Activity {
 	}
 	
 	private void show_dialog(){
-		SharedPreferences sPre = getSharedPreferences("passwd_store", MODE_PRIVATE);	
-		String record = sPre.getString("passwd", null);
-		if (TextUtils.isEmpty(record)){
+		String record = spRecord.getString("passwd", null);
+		
+		if (TextUtils.isEmpty(record))
 			showPasswdSetDialog();
-		}
 		else
-		{
 			showPasswdEnterDialog();
-		}
 	}
 	
 	private void enter_quick_setup(){
-		SharedPreferences sPre = getSharedPreferences("config", MODE_PRIVATE);	
-		boolean is_guided = sPre.getBoolean("setting_guided", false);
+		boolean is_guided = spRecord.getBoolean("setting_guided", false);
 		Class which;
 		
-		if (is_guided == true){
+		if (is_guided == true)
 			which = SetupFinishActivity.class;
-		}
 		else
 			which = Setup1Activity.class;
 		
@@ -90,22 +86,19 @@ public class HomeActivity extends Activity {
 		
 		Button btn_ok = (Button) view.findViewById(R.id.passwd_passwd_enter_btn_ok);
 		btn_ok.setOnClickListener(new OnClickListener() {
-			SharedPreferences sPre = null;
 			
 			@Override
 			public void onClick(View v) {
 				String passwdStr = passwd.getText().toString();
-				sPre = getSharedPreferences("passwd_store", MODE_PRIVATE);	
-				String record = sPre.getString("passwd", "");
+				String record = spRecord.getString("passwd", null);
 				String md5 = MD5Utils.encode(passwd.getText().toString());
 				
 				if (md5.equals(record) == true){
 					dialog.dismiss();
 					enter_quick_setup();
 				}
-				else{
+				else
 					Toast.makeText(HomeActivity.this, "密码错误", Toast.LENGTH_SHORT).show();
-				}
 			}
 		});
 		
@@ -137,8 +130,7 @@ public class HomeActivity extends Activity {
 				String passwdStrRe = passwd_re.getText().toString();
 				if (!TextUtils.isEmpty(passwdStr) && !TextUtils.isEmpty(passwdStr)){
 					if (passwdStr.equals(passwdStrRe)){
-						SharedPreferences shp = getSharedPreferences("passwd_store", MODE_PRIVATE);
-						Editor edit = shp.edit();
+						Editor edit = spRecord.edit();
 						String md5 = MD5Utils.encode(passwd.getText().toString());
 						edit.putString("passwd", md5);
 						edit.commit();
@@ -146,13 +138,11 @@ public class HomeActivity extends Activity {
 						dialog.dismiss();
 						
 						enter_quick_setup();
-					}else{
+					}else
 						Toast.makeText(HomeActivity.this, "密码输入不一致", Toast.LENGTH_SHORT).show();
-					}
 				}
-				else{
+				else
 					Toast.makeText(HomeActivity.this, "密码不能为空", Toast.LENGTH_SHORT).show();
-				}
 			}
 		});
 		
@@ -171,6 +161,7 @@ public class HomeActivity extends Activity {
 		
 		setContentView(R.layout.activity_home);
 		
+		spRecord = getSharedPreferences("config", MODE_PRIVATE);	
 		gridViewId = (GridView) findViewById(R.id.gv_home);
 
 		gridViewId.setOnItemClickListener(new OnItemClickListener() {
@@ -178,7 +169,7 @@ public class HomeActivity extends Activity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 					
-						enterActivity(position);
+					enterActivity(position);
 				}
 		});
 		
@@ -194,7 +185,6 @@ public class HomeActivity extends Activity {
 					
 					image.setImageResource(icon_id[position]);
 					tv.setText(name[position]);
-			
 					return view;
 				}
 				else
